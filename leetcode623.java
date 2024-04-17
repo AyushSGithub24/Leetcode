@@ -73,7 +73,65 @@ class Solution {
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
+ *     TreeNode() {}/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
  *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode addOneRow(TreeNode root, int val, int depth) {
+        if(depth!=1)
+        printCurrentLevel(root,depth-1,val);
+        else{
+            TreeNode rval=new TreeNode(val);
+            rval.left=root;
+            root=rval;
+        }
+        return root;
+    }
+    void printCurrentLevel(TreeNode root, int level,int data)
+    {
+        if (root == null)
+            return;
+        if (level == 1){
+            TreeNode rval=new TreeNode(data);
+            if(root.left!=null){
+                TreeNode storeLeft=root.left;
+                root.left=rval;
+                rval.left=storeLeft;
+            }
+            if(root.left==null){
+                root.left=rval;
+            }
+            TreeNode rcal=new TreeNode(data);
+            if(root.right!=null){
+                TreeNode storeRight=root.right;
+                root.right=rcal;
+                rcal.right=storeRight;
+            }
+            if(root.right==null){
+                root.right=rcal;
+            }
+            
+            
+        }
+            
+        else if (level > 1) {
+            printCurrentLevel(root.left, level - 1,data);
+            printCurrentLevel(root.right, level - 1,data);
+        }
+    }
+}
  *     TreeNode(int val) { this.val = val; }
  *     TreeNode(int val, TreeNode left, TreeNode right) {
  *         this.val = val;
